@@ -1,9 +1,12 @@
 export interface productDto {
-
+  id: number;
   title: string;
   price: string;
   description: string
   category: string
-  rating: string;
-  thumbnail: string;
+  rating: {
+    rate: string,
+    count: string,
+  };
+  image: string;
 }

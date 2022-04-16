@@ -27,7 +27,7 @@ export function ProductItem({data, ...rest} : Props){
     <Container {...rest}>
       <ImageContent>
         <ProductImage 
-          source={{uri: data.thumbnail}}
+          source={{uri: data.image }}
           resizeMode='contain'  
         />
       </ImageContent>
@@ -38,7 +38,7 @@ export function ProductItem({data, ...rest} : Props){
         <Price>U$ {data.price}</Price>
 
         <RatingContent>
-          <Rating>{data.rating}</Rating>
+          <Rating>{data.rating.rate}</Rating>
           <RatingIcon name='star' />
         </RatingContent>
       </DetailsContent>

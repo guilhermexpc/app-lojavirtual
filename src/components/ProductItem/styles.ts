@@ -46,7 +46,7 @@ export const Title = styled.Text`
 export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
   color: ${({ theme  }) => theme.colors.details_price};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(16)}px;
 `
 
 export const RatingContent = styled.View`
@@ -56,7 +56,7 @@ export const RatingContent = styled.View`
 export const Rating = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
   color: ${({ theme  }) => theme.colors.text_detail};
-  font-size: ${RFValue(14)}px;  
+  font-size: ${RFValue(16)}px;  
   margin-right: 6px;
 `
 

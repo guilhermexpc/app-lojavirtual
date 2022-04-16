@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import api from '../../services/api';
+
+import { productDto } from '../../dtos/productDto';
 import { ProductItem } from '../../components/ProductItem';
+
 
 import {
   CardIcon,
@@ -7,10 +12,38 @@ import {
   Header, 
   HeaderContent,
   HeaderTitle,
-  ProductList
+  ProductList,
+  ProductListold
 } from './styles';
 
+import { LoadingIndicator } from '../../components/LoadingIndicator';
+
+
+
 export function Products(){
+  const [products, setProducts] = useState<productDto[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchProducts(){
+    try {
+      setLoading(true);
+      const response = await api.get('/products/');   
+      console.log(response)
+      setProducts(response.data)
+
+    } catch (error) {
+      console.log(error);
+    } finally{
+      setLoading(false);
+
+    }
+  } 
+
+  useEffect(() => {
+    
+    fetchProducts();
+  },[]);
+
   return (
     <Container>
       <Header>
@@ -19,33 +52,33 @@ export function Products(){
           <CardIcon name={'shoppingcart'} />
         </HeaderContent>        
       </Header>
-      <ProductList>
-        <ProductItem 
-          data={
-                  {
-                    thumbnail:'https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg',
-                    title:'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-                    price: '29.99',
-                    category:'',
-                    description:'',
-                    rating:'4.9'                  
-                  }
-                }
-        />
 
-<ProductItem 
-          data={
-                  {
-                    thumbnail:'https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg',
-                    title:'Mens Casual Slim Fit',
-                    price: '19.99',
-                    category:'',
-                    description:'',
-                    rating:'2.9'                  
-                  }
-                }
-        />
-      </ProductList>
+      {loading ? 
+        <LoadingIndicator />
+      :
+      <ProductList
+        data={products}
+        keyExtractor={item => item.id}       
+        onRefresh={() => fetchProducts()}
+        refreshing={loading}   
+        renderItem={({ item }) => 
+          <ProductItem 
+            data={item}           
+          />          
+        }
+      />
+
+      //   <FlatList
+      //   data={products}
+      //   keyExtractor={item => item.id.toString()}
+      //   onRefresh={() => fetchProducts()}
+      //   refreshing={loading}
+      //   renderItem={({ item }) => 
+      //   <ProductItem 
+      //     data={item}           
+      //   />}
+      // />
+    }
     </Container>
   );
 }
