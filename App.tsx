@@ -5,8 +5,10 @@ import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans';
 import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display';
 import { ThemeProvider } from 'styled-components/native';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { Poppins_400Regular, Poppins_500Medium, Poppins_300Light, } from '@expo-google-fonts/poppins';
 
 import { Teste } from './src/pages/Teste';
+import { Products } from './src/pages/Products';
 import theme from './src/theme';
 
 export default function App() {
@@ -14,7 +16,10 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     DMSans_400Regular, 
     DMSerifDisplay_400Regular,
-    Roboto_400Regular
+    Roboto_400Regular,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_300Light
   })
 
   if(!fontsLoaded)
@@ -22,8 +27,8 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar style='dark' translucent={true} backgroundColor="transparent" />
-      <Teste />
+      <StatusBar style='light' translucent={true} backgroundColor="transparent" />
+      <Products />
     </ThemeProvider>
   );
 }
