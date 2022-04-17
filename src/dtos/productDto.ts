@@ -10,3 +10,8 @@ export interface productDto {
   };
   image: string;
 }
+
+export interface productCartDto {  
+  id: number;
+  quantity: number;
+}

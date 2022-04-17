@@ -1,6 +1,6 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons'
-import { RectButtonProps } from 'react-native-gesture-handler';
+import { RectButtonProps, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 
@@ -20,29 +20,35 @@ import {
 
 interface Props extends RectButtonProps {
   data: productDto;
+  onPress: () => void;
 }
 
-export function ProductItem({data, ...rest} : Props){
+export function ProductItem({data, onPress, ...rest} : Props){
   return (
-    <Container {...rest}>
-      <ImageContent>
-        <ProductImage 
-          source={{uri: data.image }}
-          resizeMode='contain'  
-        />
-      </ImageContent>
+    <GestureHandlerRootView>
+      <Container 
+        onPress={onPress}
+        {...rest}
+      >
+        <ImageContent>
+          <ProductImage 
+            source={{uri: data.image }}
+            resizeMode='contain'  
+          />
+        </ImageContent>
 
 
-      <DetailsContent>
-        <Title>{data.title}</Title>
-        <Price>U$ {data.price}</Price>
+        <DetailsContent>
+          <Title>{data.title}</Title>
+          <Price>U$ {data.price}</Price>
 
-        <RatingContent>
-          <Rating>{data.rating.rate}</Rating>
-          <RatingIcon name='star' />
-        </RatingContent>
-      </DetailsContent>
+          <RatingContent>
+            <Rating>{data.rating.rate}</Rating>
+            <RatingIcon name='star' />
+          </RatingContent>
+        </DetailsContent>
 
-    </Container>
+      </Container>
+    </GestureHandlerRootView>
   );
 }

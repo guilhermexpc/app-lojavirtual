@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar'
@@ -10,6 +11,8 @@ import { Poppins_400Regular, Poppins_500Medium, Poppins_300Light, } from '@expo-
 import { Teste } from './src/pages/Teste';
 import { Products } from './src/pages/Products';
 import theme from './src/theme';
+
+import { Routes } from './src/routes';
 
 export default function App() {
 
@@ -28,7 +31,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style='light' translucent={true} backgroundColor="transparent" />
-      <Products />
+      <Routes />
     </ThemeProvider>
   );
 }
