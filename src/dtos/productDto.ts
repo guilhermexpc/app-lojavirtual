@@ -12,6 +12,6 @@ export interface productDto {
 }
 
 export interface productCartDto {  
-  id: number;
-  quantity: number;
+  productId: number;
+  quantity: number;  
 }

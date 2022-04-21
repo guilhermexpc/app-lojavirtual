@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { FlatList } from 'react-native';
 
+import { productDto } from '../../dtos/productDto';
 
 export const Container = styled.View`
   flex: 1;
@@ -28,3 +30,11 @@ export const HeaderTitle = styled.Text`
   font-size: ${RFValue(24)}px;
   font-family: ${({theme}) => theme.fonts.TitlePoppins};
 `
+
+export const CartList = styled(FlatList as new () => FlatList<productDto>)
+.attrs({  
+  contentContainerStyle: {
+    padding: 14
+  },
+  showsVerticalScrollIndicator: false
+})``;

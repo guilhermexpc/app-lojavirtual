@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, FlatList, Modal, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import api from '../../services/api';
-import { productCardKey } from '../../asyncstoragekey'
 
+import { productCardKey } from '../../asyncstoragekey'
+import api from '../../services/api';
 import { productDto, productCartDto } from '../../dtos/productDto';
 import { ProductItem } from '../../components/ProductItem';
 import { LoadingIndicator } from '../../components/LoadingIndicator';
@@ -22,11 +23,20 @@ import {
 
 
 export function Products(){
+  const navigation = useNavigation<any>();
+
   const [products, setProducts] = useState<productDto[]>([]);
   const [cartProductQuantity, setCartProductQuantity] = useState(0);
-  // const [cartProducts, setCartProducts] = useState<productCartDto[]>([]);
+  const [cartProducts, setCartProducts] = useState<productCartDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+
+  function handleShoppingCart(){
+    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`);
+    
+    navigation.navigate('ShoppingCart');
+  }
 
 
   async function saveProduct(productId: number) {
@@ -37,7 +47,7 @@ export function Products(){
       let existingProduct = false;
 
       currentCartList.forEach(element => {
-        if (element.id == productId){
+        if (element.productId == productId){
           element.quantity += 1;
           existingProduct = true;
         }
@@ -47,7 +57,7 @@ export function Products(){
         await AsyncStorage.setItem(productCardKey, JSON.stringify(currentCartList));
       }else{      
         const newProduct: productCartDto = {
-          id: productId,
+          productId: productId,
           quantity: 1,
         };
         const cartProductList = [
@@ -61,8 +71,10 @@ export function Products(){
 
       const newCartList = await AsyncStorage.getItem(productCardKey);      
       const newCurrentCartList: productCartDto[] = newCartList ? JSON.parse(newCartList) : []; 
-      console.log(`asd: ${newCurrentCartList.length}`)
-      console.log(`asd: ${JSON.stringify(newCurrentCartList)}`)
+      console.log(`newCurrentCartList lenght: ${newCurrentCartList.length}`);
+      console.log(`newCurrentCartList list: ${JSON.stringify(newCurrentCartList)}`);
+      setCartProducts(newCurrentCartList);
+      console.log(`cartProducts: ${cartProducts}`);
       countCartProducts(newCurrentCartList);
     } catch (error) {
       console.log(error);
@@ -96,7 +108,7 @@ export function Products(){
   function handleProduct(productId: number) {
     saveProduct(productId);
     Alert.alert('', 'This item has been added to your shopping cart.', [
-      {text: 'View Shopping Cart', onPress: () => console.log('opção 1')},
+      {text: 'View Shopping Cart', onPress: () => handleShoppingCart()},
       {text: 'Continue Shopping', onPress: () => console.log('opção 2')},
     ])
   }
@@ -127,13 +139,7 @@ export function Products(){
         title='Clean'
         onPress={() => {AsyncStorage.clear(); console.log('reset storage'); setCartProductQuantity(0)}}
       />
-
-      <Button
-        title='Modal'
-        onPress={() => {setModalVisible(true)}}
-        color={'red'}
-      />
-
+      
       {loading ? 
         <LoadingIndicator />
       :

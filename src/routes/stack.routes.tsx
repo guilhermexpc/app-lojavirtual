@@ -14,8 +14,8 @@ export function StackRoutes() {
       screenOptions={{
         headerShown: false      
       }}>
-      <Screen name="ShoppingCart" component={ShoppingCart} />
       <Screen name="Products" component={Products} />
+      <Screen name="ShoppingCart" component={ShoppingCart} />
     </Navigator>
   )
 }
