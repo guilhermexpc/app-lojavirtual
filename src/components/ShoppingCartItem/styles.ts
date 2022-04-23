@@ -70,18 +70,23 @@ export const RatingIcon = styled(AntDesign)`
   color: ${({ theme }) => theme.colors.start};
 `
 export const QuantityContent = styled.View`
-  background-color: aquamarine;
   width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `
 
+export const Quantity = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.RegularText};
+  color: ${({ theme  }) => theme.colors.details_title};
+  
+  font-size: ${RFValue(16)}px;  
+`;
+
 export const QuantityButton = styled(RectButton)`
   width: 120px;
   height: 36px;
-  background-color: blue;
-  
+  background-color: blue;   
 `
 
 export const ModalContainer = styled.View`
@@ -113,12 +118,7 @@ export const ModalItemDescription = styled.Text`
   color: ${({ theme  }) => theme.colors.title};
   font-size: ${RFValue(16)}px;
 `
-export const Quantity = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_title};
-  
-  font-size: ${RFValue(12)}px;  
-`;
+
 
 export const QuantityIconPlus = styled(Entypo)`
   font-size: ${RFValue(42)}px;

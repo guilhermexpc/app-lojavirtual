@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { LoadingIndicator } from '../../components/LoadingIndicator';
@@ -8,21 +8,27 @@ import { LoadingIndicator } from '../../components/LoadingIndicator';
 
 import api from '../../services/api';
 import { ShoppingCartItem } from '../../components/ShoppingCartItem';
-import { productCartDto, productDto } from '../../dtos/productDto';
+import { productCartDto, productDto, productDtoWithQuantity } from '../../dtos/productDto';
 
 import {
   Container, 
   Header,
   HeaderTitle,
   HeaderContent,
+  Content,
   CartList, 
+  OrderSummary,
+  OrderSummaryTotalContent,
+  OrderSummaryTotal,
+  OrderSummaryTitle,
+  OrderSummaryDescription,
+  OrderSummaryDescriptionAmout
   
 } from './styles';
 import { productCardKey } from '../../asyncstoragekey';
+import { FlatList } from 'react-native-gesture-handler';
+import { styles } from '../../theme/globalStyles';
 
-interface productDtoWithQuantity extends productDto {
-  quantity: number;
-}
 
 
 export function ShoppingCart(){
@@ -30,13 +36,15 @@ export function ShoppingCart(){
   const route = useRoute();
 
   const [products, setProducts] = useState<productDtoWithQuantity[]>([]);
-  const [currentCartList2, setCurrentCartList2] = useState('')
+  const [cartAmout, setCartAmout] = useState(0);
+  const [temp, setTemp] = useState(true);  
   
   const [loading, setLoading] = useState(true);
 
   async function fetchCartList(){
     try {
       setLoading(true);
+      setTemp(true);
       const cartList = await AsyncStorage.getItem(productCardKey);      
       const currentCartList: productCartDto[] = cartList ? JSON.parse(cartList) : [];  
 
@@ -91,8 +99,8 @@ export function ShoppingCart(){
             productCartResolved.push(product);          
         }
 
-        //  console.log(JSON.stringify(resolved));
-         setProducts(productCartResolved)
+        //  console.log(JSON.stringify(resolved));        
+        setProducts(productCartResolved);
       }else{
         console.warn(`Erro no api.post('/carts'): ${response.status}, ${response.statusText}`)
       }         
@@ -101,6 +109,7 @@ export function ShoppingCart(){
       console.log(error);
     } finally{
       setLoading(false);
+      setTemp(false);
     }
   }
 
@@ -108,9 +117,36 @@ export function ShoppingCart(){
     return await api.get(`/products/${productId}`)    
   }
 
+  function AmoutCalc() {
+    let amount = 0;
+    products.forEach(item => {
+      amount += item.price * item.quantity
+    });
+
+    console.log(`amount: ${amount}`)
+    setCartAmout(amount);
+  }
+
+  function changeTemp() {    
+    setTemp(!temp)    
+  }
+
+  function removeItem(id:number) {
+    console.log(`removeItem: ${id}`)
+    setProducts(
+      products.filter((item) => {
+        return item.id !== id
+      })
+    )
+  }
+
   useEffect(() => {    
     fetchCartList();
   },[]);
+
+  useEffect(() => {    
+    AmoutCalc()
+  },[temp]);
 
   return (
     <Container>
@@ -120,24 +156,47 @@ export function ShoppingCart(){
         </HeaderContent>        
       </Header>  
 
+      <Button
+        title='Products'
+        onPress={() => {console.log(`products: ${JSON.stringify(products)}`)}}
+      />
 
       {loading ? 
         <LoadingIndicator />
       :
-        <CartList
-          data={products}
-          keyExtractor={item=> item.id}       
-          // onRefresh={() => fetchProducts()}
-          // refreshing={loading}   
-          renderItem={({ item }) => 
-            <ShoppingCartItem 
-              data={item}
-              quantity={0}
-            />    
-          }
-        />    
+       <>
+        <Content>
+          <CartList
+              data={products}
+              keyExtractor={(item: productDtoWithQuantity) => item.id}       
+              // onRefresh={() => fetchProducts()}
+              // refreshing={loading}   
+              renderItem={({ item }) => 
+                <ShoppingCartItem 
+                  data={item}   
+                  changeAmount={() => changeTemp()}
+                  removeItem={() => removeItem(item.id)}
+                />    
+              }
+            />   
+
+            <OrderSummary style={styles.defaultShadow}>
+              <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
+              <OrderSummaryTotal>
+                <OrderSummaryTotalContent>
+                  <OrderSummaryDescription>Total</OrderSummaryDescription>
+                  <OrderSummaryDescriptionAmout>{`US $${cartAmout.toFixed(2)}`}</OrderSummaryDescriptionAmout>
+                </OrderSummaryTotalContent>
+              </OrderSummaryTotal>
+            </OrderSummary>
+        </Content>
+         
+
+
+
+       </>
+        
       }  
-      
 
 
     </Container>

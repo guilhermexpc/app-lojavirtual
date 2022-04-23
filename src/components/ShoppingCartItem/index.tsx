@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons'
 import { RectButtonProps, GestureHandlerRootView, FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
@@ -18,62 +18,104 @@ import {
   RatingIcon,
   RatingContent,
   QuantityContent,
-  QuantityButton,
   Quantity,
-  ModalContainer,
-  ModalContent,
-  ModalItemButton,
-  ModalItemDescription,
-  QuantityIconPlus,
-  QuantityIconMinus
 } from './styles';
+import theme from '../../theme';
 
 interface productDtoWithQuantity extends productDto {
   quantity: number;
 }
-
-interface Props extends RectButtonProps {
-  data: productDtoWithQuantity;
-  quantity: Number;
+interface Props {
+  data: productDtoWithQuantity;  
+  changeAmount: () => void;
+  removeItem: () => void;
 }
 
+export function ShoppingCartItem({data, changeAmount, removeItem}: Props){
+  const [modalVisible, setModalVisible] = useState(true);
+  const [cartData, setCartData] = useState<productDtoWithQuantity>();
+  const [cartAmout, setCartAmout] = useState(0);
 
+  useEffect(() => {
+    setModalVisible(true);
+    setCartData(data)
+    setModalVisible(false);
 
-export function ShoppingCartItem({data} : Props){
-  const [modalVisible, setModalVisible] = useState(false);
+  },[])
 
-  const maxItens:number[] = [1,2,3];
+  useEffect(() => {
+    setCartData(data)
+    setModalVisible(false);
+
+  },[modalVisible])
+  
+function handleChangeItemQuantity(value:number) {  
+  console.log(`dataQ 1: ${data.quantity}`)  
+  if (data.quantity + value >= 1)
+    data.quantity += value;
+    setCartData(data)
+    changeAmount();
+}
+
+function handleRemoveItem(){
+  Alert.alert('Are you sure about this?', 'This action will remove this item from your shopping cart.', [
+    {text: 'OK', onPress: () => removeItem()},
+    {text: 'Cancel', onPress: () => {}},
+  ])
+}
 
   return (    
-      <Container>
-        <ImageContent>
-          <ProductImage 
-            source={{uri: data.image }}
-            resizeMode='contain'  
-          />
-        </ImageContent>
-
-       
+      <Container style={styles.defaultShadow}>
+          {
+            modalVisible ? (
+              <View>
+                <Text>Carregando</Text>
+              </View>
+            ):
+            (
+            <>
+            <ImageContent>
+              <ProductImage 
+                source={{uri: cartData.image }}
+                resizeMode='contain'  
+              />
+          </ImageContent>
 
         <DetailsContent>        
-          <Title>{data.title}</Title>        
-          {/* <Description>{data.description}</Description> */}
-          <Price>U$ {data.price}</Price>
+          <Title>{cartData.title}</Title>        
+          {/* <Description>{cartData.description}</Description> */}
+          <Price>U$ {cartData.price}</Price>
           <RatingContent>
-            <Rating>{data.rating.rate}</Rating>
+            <Rating>{cartData.rating.rate}</Rating>
             <RatingIcon name='star' />
           </RatingContent>
-
           
-          <QuantityContent>
-            <GestureHandlerRootView>
-              <QuantityButton 
-                title=''
-                onPress={() => {}}
-              >
-              </QuantityButton>
-            </GestureHandlerRootView>
+          <QuantityContent>          
+            <IconeButton
+              color={theme.colors.details_price}
+              iconeType='circle-with-minus'
+              onPress={() => {handleChangeItemQuantity(-1)}}
+            />
+       
+            <Quantity>{cartData.quantity}</Quantity>
+           
+            <IconeButton
+              color={theme.colors.success}
+              iconeType='circle-with-plus'
+              onPress={() => {handleChangeItemQuantity(1)}}
+            />
+
+            <IconeButton
+              color={theme.colors.details_price}
+              iconeType='circle-with-cross'
+              onPress={() => {handleRemoveItem()}}
+            />
+
           </QuantityContent>
+          </DetailsContent>
+            </>
+            )
+          }
 
         {/* <Modal
           animationType="fade"
@@ -95,31 +137,6 @@ export function ShoppingCartItem({data} : Props){
           </ModalContent>
         </ModalContainer>
       </Modal> */}
-
-      <Pressable style={[stylesT.button, stylesT.buttonOpen]} onPress={() => setModalVisible(true)}>
-        <Text style={stylesT.textStyle}>Show Modal</Text>
-      </Pressable>
-
-        </DetailsContent>
       </Container>    
   );
 }
-
-const stylesT = StyleSheet.create({
-  
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});

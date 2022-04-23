@@ -33,8 +33,7 @@ export function Products(){
 
 
   function handleShoppingCart(){
-    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`);
-    
+    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`);    
     navigation.navigate('ShoppingCart');
   }
 

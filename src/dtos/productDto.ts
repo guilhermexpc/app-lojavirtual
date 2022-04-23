@@ -1,7 +1,7 @@
 export interface productDto {
   id: number;
   title: string;
-  price: string;
+  price: number;
   description: string
   category: string
   rating: {
@@ -14,4 +14,7 @@ export interface productDto {
 export interface productCartDto {  
   productId: number;
   quantity: number;  
+}
+export interface productDtoWithQuantity extends productDto {
+  quantity: number;
 }

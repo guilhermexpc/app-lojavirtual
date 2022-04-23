@@ -12,20 +12,19 @@ import theme from '../../theme';
 
 export interface Props extends BorderlessButtonProps{
   color: string;
-  iconeType: 'circle-with-plus' | 'circle-with-minus'
+  iconeType: 'circle-with-plus' | 'circle-with-minus' | 'circle-with-cross'
   
 }
 
 export function IconeButton({ color, iconeType, ...rest }: Props){
-  return (
-                
-    <GestureHandlerRootView style={{flex:1,  width: 100, height:100}}> 
+  return (                
+    <GestureHandlerRootView> 
       <Container {...rest}>
-        {/* <Entypo 
+        <Entypo 
           name={iconeType}
           size={36}
           color={color}      
-        /> */}
+        />
       </Container>
     </GestureHandlerRootView>
   );
