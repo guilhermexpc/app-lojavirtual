@@ -41,13 +41,6 @@ export const CartContent = styled(BorderlessButton)`
   align-items: flex-end;
   justify-content: center;
 `
-
-export const CartContentView = styled.View`
-  width: 60px;
-  height: 100%;
-  background-color: red;
-`
-
 export const CardIcon = styled(AntDesign)`
   font-size: 28px;
   color: ${({ theme }) => theme.colors.icon};
@@ -75,14 +68,10 @@ export const ProductListold = styled.View`
   padding: 14px;
 `
 
-export const ProductList = styled(FlatList as new () => FlatList<productDto>)
-.attrs({  
-  contentContainerStyle: {
-    padding: 14
-  },
-  showsVerticalScrollIndicator: false
-})``;
-
+export const ProductListContainer = styled.View`
+  flex: 1;
+  padding: 8px 14px 0px;  
+`
 export const ModalContainer = styled.View`
   flex: 1;
   justify-content: center;

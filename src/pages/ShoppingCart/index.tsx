@@ -203,10 +203,10 @@ export function ShoppingCart(){
         </HeaderContent>        
       </Header>  
 
-      <Button
+      {/* <Button
         title='Products'
         onPress={() => {console.log(`products: ${JSON.stringify(products)}`)}}
-      />
+      /> */}
 
       {loading ? 
         <LoadingIndicator />

@@ -7,8 +7,10 @@ import {
   Container,
   ImageContent,
   DetailsContent,
+  TitleContent,
   ProductImage,
   Title,
+  Description,
   Price,
   Rating,
   RatingIcon,
@@ -38,7 +40,9 @@ export function ProductItem({data, onPress, ...rest} : Props){
         </ImageContent>
 
         <DetailsContent>
-          <Title>{data.title}</Title>
+          <TitleContent><Title>{data.title}</Title></TitleContent>
+
+          <Description>{data.description}</Description>
           <Price>U$ {data.price}</Price>
 
           <RatingContent>

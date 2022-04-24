@@ -5,7 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 
 export const Container = styled(RectButton)`
   width: 100%;
-  height: 124px;
+  /* height: 124px; */
+  min-height: 124px;
 
   flex-direction: row;
   justify-content: space-between;
@@ -32,16 +33,29 @@ export const DetailsContent = styled.View`
   justify-content: flex-start;
 `
 
+export const TitleContent = styled.View`
+  width: 100%;
+`
+
 export const ProductImage = styled.Image`
   width: 98px;
   height: 98px;
 `
 
 export const Title = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.RegularText};
+  font-family: ${({ theme }) => theme.fonts.TitlePoppins};
   color: ${({ theme  }) => theme.colors.cart_Title};
-  font-size: ${RFValue(16)}px;  
+  font-size: ${RFValue(16)}px;    
+  text-align: left;
 `;
+
+export const Description = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.RegularText};
+  color: ${({ theme  }) => theme.colors.cart_details};
+  line-height: 13px;
+  font-size: ${RFValue(10)}px;  
+`;
+
 
 export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};

@@ -20,11 +20,9 @@ import {
   HeaderContent,
   HeaderTitle,
   CartContent,
-  CartContentView,
   CardQuantityContent,
   CardQuantityValue,
-  ProductList,
-  ModalContainer
+  ProductListContainer,  
 } from './styles';
 
 
@@ -143,7 +141,7 @@ export function Products(){
     <Container>
       <Header>
         <HeaderContent>
-          <HeaderTitle>Produtos</HeaderTitle>
+          <HeaderTitle testID={'text-headertittle'}>Products</HeaderTitle>
           <GestureHandlerRootView>
             <CartContent
               onPress={() => handleShoppingCart()}
@@ -162,26 +160,31 @@ export function Products(){
         </HeaderContent>        
       </Header>
 
-      <Button
+      {/* <Button
         title='Clean'
         onPress={() => {AsyncStorage.clear(); console.log('reset storage'); setCartProductQuantity(0)}}
-      />
-      
+      /> */}
+
       {loading ? 
         <LoadingIndicator />
       :
-      <ProductList
-        data={products}
-        keyExtractor={item=> item.id}       
-        onRefresh={() => fetchProducts()}
-        refreshing={loading}   
-        renderItem={({ item }) => 
-          <ProductItem 
-            data={item}
-            onPress={() => {handleProduct(item.id)}}       
-          />          
-        }
-      />      
+      <ProductListContainer>
+        <FlatList
+            testID='flatlist-products'
+            data={products}
+            keyExtractor={item=> item.id}       
+            onRefresh={() => fetchProducts()}
+            refreshing={loading}      
+            showsVerticalScrollIndicator={true}     
+            renderItem={({ item }) => 
+              <ProductItem 
+                data={item}
+                onPress={() => {handleProduct(item.id)}}       
+              />          
+            }
+          />    
+      </ProductListContainer>
+        
     }
 
     {/* <Modal
