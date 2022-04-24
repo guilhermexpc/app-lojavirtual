@@ -11,8 +11,7 @@ import {
   ImageContent,
   DetailsContent,
   ProductImage,
-  Title,
-  Description,
+  Title,  
   Price,
   Rating,
   RatingIcon,
@@ -51,10 +50,11 @@ export function ShoppingCartItem({data, changeAmount, removeItem}: Props){
   
 function handleChangeItemQuantity(value:number) {  
   console.log(`dataQ 1: ${data.quantity}`)  
-  if (data.quantity + value >= 1)
+  if (data.quantity + value >= 1){
     data.quantity += value;
     setCartData(data)
     changeAmount();
+  }
 }
 
 function handleRemoveItem(){
@@ -65,21 +65,21 @@ function handleRemoveItem(){
 }
 
   return (    
-      <Container style={styles.defaultShadow}>
-          {
-            modalVisible ? (
-              <View>
-                <Text>Carregando</Text>
-              </View>
-            ):
-            (
-            <>
-            <ImageContent>
-              <ProductImage 
-                source={{uri: cartData.image }}
-                resizeMode='contain'  
-              />
-          </ImageContent>
+    <Container style={styles.defaultShadow}>
+      {
+        modalVisible ? (
+          <View>
+            <Text>Carregando</Text>
+          </View>
+        ):
+        (
+        <>
+        <ImageContent>
+            <ProductImage 
+              source={{uri: cartData.image }}
+              resizeMode='contain'  
+          />
+        </ImageContent>
 
         <DetailsContent>        
           <Title>{cartData.title}</Title>        
@@ -92,51 +92,51 @@ function handleRemoveItem(){
           
           <QuantityContent>          
             <IconeButton
-              color={theme.colors.details_price}
+              color={theme.colors.cart_price}
               iconeType='circle-with-minus'
               onPress={() => {handleChangeItemQuantity(-1)}}
             />
-       
+        
             <Quantity>{cartData.quantity}</Quantity>
-           
+            
             <IconeButton
-              color={theme.colors.success}
+              color={theme.colors.icon_success}
               iconeType='circle-with-plus'
               onPress={() => {handleChangeItemQuantity(1)}}
             />
 
             <IconeButton
-              color={theme.colors.details_price}
+              color={theme.colors.cart_price}
               iconeType='circle-with-cross'
               onPress={() => {handleRemoveItem()}}
             />
 
           </QuantityContent>
           </DetailsContent>
-            </>
-            )
-          }
+          </>
+        )
+      }
 
-        {/* <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-        }}>
-        <ModalContainer>
-          <ModalContent style={styles.defaultShadow}>
-            <Title>Quantity</Title>
-            <GestureHandlerRootView style={{width: '100%', alignItems: 'center'}}>
-              <ModalItemButton
-                 onPress={() => setModalVisible(!modalVisible)}>
-                 <ModalItemDescription>{1} Item</ModalItemDescription>
-              </ModalItemButton>
-            </GestureHandlerRootView>
-          </ModalContent>
-        </ModalContainer>
-      </Modal> */}
-      </Container>    
+      {/* <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+      }}>
+      <ModalContainer>
+        <ModalContent style={styles.defaultShadow}>
+          <Title>Quantity</Title>
+          <GestureHandlerRootView style={{width: '100%', alignItems: 'center'}}>
+            <ModalItemButton
+                onPress={() => setModalVisible(!modalVisible)}>
+                <ModalItemDescription>{1} Item</ModalItemDescription>
+            </ModalItemButton>
+          </GestureHandlerRootView>
+        </ModalContent>
+      </ModalContainer>
+    </Modal> */}
+    </Container>    
   );
 }

@@ -39,13 +39,13 @@ export const ProductImage = styled.Image`
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_title};
+  color: ${({ theme  }) => theme.colors.cart_Title};
   font-size: ${RFValue(16)}px;  
 `;
 
 export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_price};
+  color: ${({ theme  }) => theme.colors.cart_price};
   font-size: ${RFValue(16)}px;
 `
 
@@ -55,13 +55,13 @@ export const RatingContent = styled.View`
 
 export const Rating = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.text_detail};
+  color: ${({ theme  }) => theme.colors.cart_details};
   font-size: ${RFValue(16)}px;  
   margin-right: 6px;
 `
 
 export const RatingIcon = styled(AntDesign)`
   font-size: ${RFValue(20)}px;
-  color: ${({ theme }) => theme.colors.start};
+  color: ${({ theme }) => theme.colors.icon_star};
 `
 

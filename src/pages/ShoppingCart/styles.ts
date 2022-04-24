@@ -64,7 +64,7 @@ export const OrderSummaryTotalContent= styled.View`
 `
 
 export const OrderSummaryTitle = styled.Text`
-  color: ${({ theme  }) => theme.colors.shape_dark};
+  color: ${({ theme  }) => theme.colors.subTitle};
   font-size: ${RFValue(24)}px;
   font-family: ${({theme}) => theme.fonts.TitlePoppins};
 `
@@ -76,7 +76,7 @@ export const OrderSummaryDescription = styled.Text`
 `
 
 export const OrderSummaryDescriptionAmout = styled.Text`
-  color: ${({ theme  }) => theme.colors.shape_dark};
+  color: ${({ theme  }) => theme.colors.subTitle};
   font-family: ${({theme}) => theme.fonts.RegularText};
   font-size: ${RFValue(16)}px;  
 `

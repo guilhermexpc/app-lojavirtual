@@ -2,13 +2,15 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { AntDesign } from '@expo/vector-icons'; 
 import { FlatList, FlatListProps } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
+
 
 import { productDto } from '../../dtos/productDto';
 
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.background_primary2};
+  background-color: ${({ theme }) => theme.colors.background_secondary};
 `;
 
 export const Header = styled.View`
@@ -33,27 +35,33 @@ export const HeaderTitle = styled.Text`
   font-size: ${RFValue(24)}px;
   font-family: ${({theme}) => theme.fonts.TitlePoppins};
 `
-export const CartContent = styled.View`
-  width: 60px;
+export const CartContent = styled(BorderlessButton)`
+  width: 28px;
   height: 100%;
   align-items: flex-end;
   justify-content: center;
 `
 
+export const CartContentView = styled.View`
+  width: 60px;
+  height: 100%;
+  background-color: red;
+`
+
 export const CardIcon = styled(AntDesign)`
   font-size: 28px;
-  color: ${({ theme }) => theme.colors.background_secondary};
+  color: ${({ theme }) => theme.colors.icon};
 `;
 
 export const CardQuantityContent = styled.View`
   width: 18px;
   height: 18px;
-  background-color: ${({ theme }) => theme.colors.details_price};;
+  background-color: ${({ theme }) => theme.colors.cart_price};;
   border-radius: 9px;
   align-items: center;
   justify-content: center;
   right: 12px;
-  bottom: 6px;
+  bottom: 16px;
   position: absolute;
 `
 
@@ -74,3 +82,11 @@ export const ProductList = styled(FlatList as new () => FlatList<productDto>)
   },
   showsVerticalScrollIndicator: false
 })``;
+
+export const ModalContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({theme}) => theme.colors.background_primary};
+  opacity: 0.5;
+`

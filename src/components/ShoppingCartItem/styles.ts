@@ -38,19 +38,19 @@ export const ProductImage = styled.Image`
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_title};
+  color: ${({ theme  }) => theme.colors.cart_Title};
   font-size: ${RFValue(16)}px;  
 `;
 
 export const Description = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_title};
+  color: ${({ theme  }) => theme.colors.cart_Title};
   font-size: ${RFValue(14)}px;  
 `;
 
 export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_price};
+  color: ${({ theme  }) => theme.colors.cart_price};
   font-size: ${RFValue(16)}px;
 `
 
@@ -60,14 +60,14 @@ export const RatingContent = styled.View`
 
 export const Rating = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.text_detail};
+  color: ${({ theme  }) => theme.colors.cart_details};
   font-size: ${RFValue(16)}px;  
   margin-right: 6px;
 `
 
 export const RatingIcon = styled(AntDesign)`
   font-size: ${RFValue(20)}px;
-  color: ${({ theme }) => theme.colors.start};
+  color: ${({ theme }) => theme.colors.icon_star};
 `
 export const QuantityContent = styled.View`
   width: 100%;
@@ -78,7 +78,7 @@ export const QuantityContent = styled.View`
 
 export const Quantity = styled.Text`
   font-family: ${({ theme }) => theme.fonts.RegularText};
-  color: ${({ theme  }) => theme.colors.details_title};
+  color: ${({ theme  }) => theme.colors.cart_Title};
   
   font-size: ${RFValue(16)}px;  
 `;
@@ -88,47 +88,3 @@ export const QuantityButton = styled(RectButton)`
   height: 36px;
   background-color: blue;   
 `
-
-export const ModalContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-top: 22px;
-`
-export const ModalContent = styled.View`
-   margin: 20px;
-   width: 220px;
-   background-color: white;
-   border-radius: 20px;
-   padding: 24px 0;
-   align-items: center;     
-`
-
-export const ModalItemButton = styled(RectButton)`
-  width: 100%;
-  height: 42px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  border-radius: 0px;
-`
-
-export const ModalItemDescription = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.LightText};
-  color: ${({ theme  }) => theme.colors.title};
-  font-size: ${RFValue(16)}px;
-`
-
-
-export const QuantityIconPlus = styled(Entypo)`
-  font-size: ${RFValue(42)}px;
-  color: ${({ theme }) => theme.colors.success};
-`
-
-export const QuantityIconMinus = styled(Entypo)`
-  font-size: ${RFValue(42)}px;
-  color: ${({ theme }) => theme.colors.success};
-`
-
-
-

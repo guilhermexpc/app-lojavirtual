@@ -2,8 +2,6 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons'
 import { RectButtonProps, GestureHandlerRootView } from 'react-native-gesture-handler';
 
-
-
 import { productDto } from '../../dtos/productDto';
 import {
   Container,
@@ -17,6 +15,7 @@ import {
   RatingContent,
 
 } from './styles';
+import { styles } from '../../theme/globalStyles'
 
 interface Props extends RectButtonProps {
   data: productDto;
@@ -29,6 +28,7 @@ export function ProductItem({data, onPress, ...rest} : Props){
       <Container 
         onPress={onPress}
         {...rest}
+        style={styles.defaultShadow}
       >
         <ImageContent>
           <ProductImage 
@@ -36,7 +36,6 @@ export function ProductItem({data, onPress, ...rest} : Props){
             resizeMode='contain'  
           />
         </ImageContent>
-
 
         <DetailsContent>
           <Title>{data.title}</Title>

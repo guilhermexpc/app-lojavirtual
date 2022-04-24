@@ -7,7 +7,7 @@ export function LoadingIndicator(){
 
   return (
     <ActivityIndicator 
-      color={theme.colors.title}
+      color={theme.colors.loadingIndicator}
       size="large"
       style={{ flex: 1}}
     />
