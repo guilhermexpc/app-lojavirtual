@@ -64,13 +64,10 @@ export function ShoppingCart(){
         const cartList = await AsyncStorage.getItem(productCardKey);      
         const currentCartList: productCartDto[] = cartList ? JSON.parse(cartList) : []; 
         setCartProducts(currentCartList);
-        
-        console.log(`response.data: ${JSON.stringify(currentCartList)}`)
-
+      
         let cartProductList: productDto[];
 
         const unresolved = currentCartList.map(async(element) => {
-          console.log(`/products/${element.productId}`)
           const productResponse = await api.get(`/products/${element.productId}`)
            return productResponse.data;
          })       
@@ -79,17 +76,7 @@ export function ShoppingCart(){
      
         let productCartResolved: productDtoWithQuantity[] = [];
 
-        for (let index = 0; index < resolved.length; index++) {          
-          console.log(`id: ${resolved[index].id}`); 
-          console.log(`quantity: ${currentCartList[index].quantity}`); 
-          console.log(`title: ${resolved[index].title}`); 
-          console.log(`price: ${resolved[index].price}`); 
-          console.log(`description: ${resolved[index].description}`); 
-          console.log(`category: ${resolved[index].category}`); 
-          console.log(`rate: ${resolved[index].rating.rate}`); 
-          console.log(`count: ${resolved[index].rating.count}`); 
-          console.log(`image: ${resolved[index].image}`);
-
+        for (let index = 0; index < resolved.length; index++) {     
           const product: productDtoWithQuantity = {
               id: resolved[index].id,
               quantity: currentCartList[index].quantity,
@@ -106,7 +93,6 @@ export function ShoppingCart(){
             productCartResolved.push(product);          
         }
 
-        //  console.log(JSON.stringify(resolved));        
         setProducts(productCartResolved);
       }else{
         console.warn(`Erro no api.post('/carts'): ${response.status}, ${response.statusText}`)
@@ -123,10 +109,8 @@ export function ShoppingCart(){
   async function saveProducts(isRemoveItem: boolean) {
     setModalVisible(true);
     if (products.length > 0 || isRemoveItem){
-      console.log(`saveProducts: products: ${JSON.stringify(products[0].id)}`)
       await AsyncStorage.setItem(productCardKey, JSON.stringify(cartProducts));                      
       const cartList = await AsyncStorage.getItem(productCardKey);      
-      console.log(`cartList: ${JSON.stringify(cartList)}`);
     }
 
     setModalVisible(false);
@@ -160,7 +144,6 @@ export function ShoppingCart(){
       }); 
     }
     setCartAmout(amount);
-    console.log(`products: ${JSON.stringify(products)}`)  
 
   }
 
@@ -170,7 +153,6 @@ export function ShoppingCart(){
   }
 
   async function removeItem(id:number) {
-    console.log(`removeItem: ${id}`)
     setProducts(
       products.filter((item) => {
         return item.id !== id
@@ -187,13 +169,8 @@ export function ShoppingCart(){
   },[products]);
 
   useEffect(() => {    
-    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`)    
     saveProducts(false);
   },[cartProducts]);
-
-  // useEffect(() => {    
-  //   saveProducts()
-  // },[products]);
 
   return (
     <Container>
