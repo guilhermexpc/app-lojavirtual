@@ -64,8 +64,6 @@ export function ShoppingCart(){
         const cartList = await AsyncStorage.getItem(productCardKey);      
         const currentCartList: productCartDto[] = cartList ? JSON.parse(cartList) : []; 
         setCartProducts(currentCartList);
-      
-        let cartProductList: productDto[];
 
         const unresolved = currentCartList.map(async(element) => {
           const productResponse = await api.get(`/products/${element.productId}`)

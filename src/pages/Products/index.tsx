@@ -36,14 +36,12 @@ export function Products(){
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
-  function handleShoppingCart(){
-    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`);    
+  function handleShoppingCart(){    
     navigation.navigate('ShoppingCart');
   }
 
   async function saveProduct(productId: number) {
-    try {
-      console.log('### handleProduct ###')
+    try {      
       setModalVisible(true);
       const cartList = await AsyncStorage.getItem(productCardKey);      
       const currentCartList: productCartDto[] = cartList ? JSON.parse(cartList) : []; 
@@ -69,12 +67,7 @@ export function Products(){
         ]
         await AsyncStorage.setItem(productCardKey, JSON.stringify(cartProductList));
       }
-      console.log('### CART LIST ###');
-      console.log(await AsyncStorage.getItem(productCardKey));
-
       await getCartProducts();
-      console.log(`cartProducts: ${cartProducts}`);
-      // countCartProducts(newCurrentCartList);
       setModalVisible(false);
 
       Alert.alert('', 'This item has been added to your shopping cart.', [
@@ -110,11 +103,9 @@ export function Products(){
 
   function countCartProducts(cartProducts: productCartDto[]) {
     let cartQuantity = 0;
-    console.log(`cartProducts: ${JSON.stringify(cartProducts)}`)
     cartProducts.forEach(product => {
       cartQuantity += product.quantity;      
     });
-    console.log(`countCartProducts: ${cartQuantity}`);
     setCartProductQuantity(cartQuantity);
   }
 
@@ -122,12 +113,7 @@ export function Products(){
     saveProduct(productId);
   }
 
-  // useEffect(() => {    
-  //   fetchProducts();
-  // },[]);
-
   useEffect(() => {
-    console.log('isFocused')
     fetchProducts();
 
   }, [isFocused]);

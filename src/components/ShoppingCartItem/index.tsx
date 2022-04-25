@@ -48,8 +48,7 @@ export function ShoppingCartItem({data, changeAmount, removeItem}: Props){
 
   },[modalVisible])
   
-function handleChangeItemQuantity(value:number) {  
-  console.log(`dataQ 1: ${data.quantity}`)  
+function handleChangeItemQuantity(value:number) {    
   if (data.quantity + value >= 1){
     data.quantity += value;
     setCartData(data)
